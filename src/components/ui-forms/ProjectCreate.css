@@ -1,0 +1,30 @@
+.self-manager-projects-create-card {
+  .self-manager-project-form-container {
+    .self-manager-project-basic {
+      border: 1px solid rgba(16, 22, 26, 0.15);
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      .self-manager-project-timestones {
+        border: 1px solid rgba(16, 22, 26, 0.15);
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        .project-timestones-title {
+          font-size: 14px;
+          font-weight: 600;
+          border-bottom: 1px dashed #AAA;
+          padding-bottom: 15px;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+  .self-manager-add-project-title {
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px dashed #AAA;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+}

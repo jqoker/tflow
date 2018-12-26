@@ -1,0 +1,30 @@
+.self-manager-page {
+  position: relative;
+  .self-manager-page-title {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0 30px;
+  }
+  .self-manager-container {
+    display: flex;
+    background-color: #F4F4F4;
+    padding: 70px 20px 20px 20px;
+    .self-manager-main-router {
+      flex: 1 0 0;
+    }
+  }
+}
+
+/* 去除点击蓝色边框 */
+button:focus,
+.DayPicker-Day {
+  outline: none;
+}
+::-moz-focus-inner {
+  border-color: transparent;
+}
+a,
+a:hover {
+  text-decoration: none;
+  color: #474d52;
+}
