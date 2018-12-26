@@ -23,7 +23,7 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.css$/,
+        test: /\.(css|styl)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -46,7 +46,7 @@ module.exports = {
                 ]
               }
             },
-            'sass-loader'
+            'stylus-loader'
           ]
         }),
       },
