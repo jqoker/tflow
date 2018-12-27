@@ -13,6 +13,7 @@ import {
 import './ProjectDetail.css';
 import ProjectCreate from '../../ui-forms/ProjectCreate.jsx';
 import projectSelector from '../../../selectors/project.js';
+import CreateTasks from '../../inputs/CreateTasks.jsx';
 
 // 时间节点名称map
 const timestoneMap = {
@@ -55,6 +56,7 @@ export default class ProjectDetail extends Component {
     } = this.pickOutProjectDetail() || {};
     return (
       <div className="self-manager-projects-detail">
+        <CreateTasks />
         <Card className="self-manager-projects-detail-card" elevation={Elevation.THREE}>
           <Text ellipsize={true} className="self-manager-add-project-title">项目详情</Text>
           <div className="project-detail-container">
