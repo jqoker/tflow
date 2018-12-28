@@ -1,7 +1,7 @@
 {
   "name": "self-mananger",
   "version": "1.0.0",
-  "description": "A simple self manager application. include(project,tasks,participators)manager. or team cooperation",
+  "description": "A simple self manager application. include(project,tasks,participators)manager. or team cooperation.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
