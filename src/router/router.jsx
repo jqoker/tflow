@@ -3,15 +3,16 @@
  */
 import React, { Component } from 'react';
 import { Route } from "react-router-dom";
-import ProjectCreate from '../components/ui-forms/ProjectCreate.jsx';
-import ProjectDetail from '../components/ui-views/project-detail/ProjectDetail.jsx';
+import CreateProject from '../components/inputs/create-project/CreateProject.jsx';
+import ProjectDetail from '../components/views/project-detail/ProjectDetail.jsx';
+import s from '../app.styl';
 
 export default class RootRouter extends Component {
   render() {
     return (
-      <div className="self-manager-main-router">
+      <div className={s.selfManagerPageRouter}>
         <Route path="/" exact component={ProjectDetail} />
-        <Route path="/project/create" component={ProjectCreate} />
+        <Route path="/project/create" component={CreateProject} />
         <Route path="/project/detail/:id" component={ProjectDetail} />
       </div>
     );

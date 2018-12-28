@@ -23,6 +23,7 @@ const computeThingsNeedToHandle = (project) => {
 
 // 计算时间节点
 /**
+ * 需先升序处理，再判断当前时间节点
  * timestones: {
  *   START, // 起始时间
  *   QA, // 提测时间
@@ -39,7 +40,8 @@ const computeTimestones = (project) => {
     // 无时间节点，赋值undefined，UI层面用于提示展示
     if (timeStr) {
       const time = new Date(timeStr);
-      objt[key] = `${time.getFullYear()}.${time.getMonth() + 1}.${time.getDate()}`;
+      // const now = Date.now();
+      objt[key] = timeStr;
     }
   });
   return objt;

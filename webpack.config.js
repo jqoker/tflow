@@ -9,6 +9,40 @@ const pathsToClean = [
 const cleanOptions = {};
 const mode = process.env.NODE_ENV;
 
+const styleLoaderOpts = ({
+  modules = false,
+  stylusLoader = false,
+}) => {
+  const options = {
+    fallback: 'style-loader',
+    use: [
+      {
+        loader: 'css-loader',
+        options: {
+          modules,
+          camelCase: true,
+          localIdentName: '[name]__[local]--[hash:base64:5]',
+          importLoaders: 1,
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          ident: 'postcss',
+          plugins: [
+            require('autoprefixer')()
+          ]
+        }
+      }
+    ]
+  };
+  if (stylusLoader) {
+    options.use[0].options.importLoaders = 2;
+    options.use.push('stylus-loader');
+  }
+  return options;
+};
+
 module.exports = {
   mode: mode,
   entry: path.join(__dirname, './src/bootstrap.jsx'),
@@ -23,32 +57,12 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(css|styl)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                // blueprintjs库不支持css modules
-                modules: false,
-                camelCase: true,
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-                importLoaders: 2,
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: [
-                  require('autoprefixer')()
-                ]
-              }
-            },
-            'stylus-loader'
-          ]
-        }),
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract(styleLoaderOpts({})),
+      },
+      {
+        test: /\.styl$/,
+        use: ExtractTextPlugin.extract(styleLoaderOpts({ modules: true, stylusLoader: true })),
       },
       {
         test: /\.(eot|woff|ttf)$/,

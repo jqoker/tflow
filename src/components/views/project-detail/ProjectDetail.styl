@@ -1,0 +1,51 @@
+.selfManagerProjectDetail
+  .selfManagerProjectDetailCard
+    margin-bottom: 10px
+    .tasksList
+      list-style-type: none
+      .tasksItem
+        display: inline-block
+        width: 23%;
+        border: 1px solid #e8e8e8
+        padding: 10px
+        margin: 0 15px 10px 0
+        color: rgba(0, 0, 0, 0.65)
+        vertical-align: top
+        box-sizing: border-box
+        &.complete
+          background-color: #dbffd8
+        .tasksItemTitle
+          width: 100%
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
+          font-size: 16px
+          font-weight: 600
+          margin-bottom: 10px
+          padding-bottom: 10px
+          border-bottom: 1px dashed #e8e8e8
+        .tasksItemDescription
+          font-size: 14px
+          line-height: 22px
+    .participatorList
+      list-style-type: none
+      .participatorItem
+        display: inline-block
+        margin: 0 15px 10px 0
+        .participatorItemTitle
+          font-size: 16px
+          font-weight: 600
+.dotStatus
+  display: inline-block
+  .dotStatusPhase
+    display: inline-block
+    margin-right: 5px
+  .dotStatusColor
+    margin-left: 5px
+    font-weight: 600
+    &.finish
+      color: #38ba2d
+    &.process
+      color: #1890ff
+    &.wait
+      color: rgba(0, 0, 0, 0.25)

@@ -1,10 +1,20 @@
 /**
  * Toastr
  */
-import { Position, Toaster } from '@blueprintjs/core';
+import { message } from 'antd';
 
-export const Toastr = Toaster.create({
-    className: 'self-manager-toastr',
-    position: Position.TOP,
-    timeout: 3000,
+const TIMEOUT = 3; // 3s
+const Toastr = {};
+[
+  'success',
+  'error',
+  'info',
+  'warning',
+  'warn',
+  'loading'
+].forEach(method => {
+  Toastr[method] = (title) => {
+    message[method](title, TIMEOUT);
+  }
 });
+export default Toastr;

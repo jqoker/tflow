@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Card,
-  Elevation,
-  Navbar,
-  NavbarGroup,
-  NavbarDivider,
-  NavbarHeading,
-  Classes,
-  Alignment,
-  Button,
-  Spinner,
+  Menu,
   Icon,
-} from '@blueprintjs/core';
+  Layout
+} from 'antd';
 import { withRouter, Route, Link } from "react-router-dom";
 import {
   fetchProjectList,
@@ -20,24 +12,27 @@ import {
   fetchProjectListFail,
 } from './actions/index.js';
 import ProjectDBHelper from './IndexedDB/helper/ProjectDBHelper.js';
-import ProjectList from './components/ui-views/project-list/ProjectList.jsx';
+import ProjectList from './components/views/project-list/ProjectList.jsx';
 import RootRouter from './router/router.jsx';
-import Loading from './components/ui-views/loading/Loading.jsx';
+import Loading from './components/views/loading/Loading.jsx';
 import projectSelector from './selectors/project.js';
-import './app.css';
+import s from './app.styl';
+
+const MENU_KEY = {
+  CREATE_PROJECT: 'CREATE_PROJECT',
+  PROJECT_SETTINGS: 'PROJECT_SETTINGS',
+};
 
 @withRouter
 @connect(projectSelector)
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.onClickCreateProject = this.onClickCreateProject.bind(this);
-    this.onClickDetailProject = this.onClickDetailProject.bind(this);
   }
   componentDidMount() {
-    this.startFetchProjects();
+    this.fetchProjects();
   }
-  startFetchProjects() {
+  fetchProjects() {
     const { dispatch } = this.props;
     dispatch(fetchProjectList());
     ProjectDBHelper.getInstance().select({
@@ -49,13 +44,18 @@ export default class App extends Component {
       }
     });
   }
-  onClickCreateProject() {
+  onMenuItemClick(e) {
     const { history } = this.props;
-    history.push('/project/create');
-  }
-  onClickDetailProject() {
-    const { history } = this.props;
-    history.push('/project/detail');
+    switch (e.key) {
+      case MENU_KEY.CREATE_PROJECT: {
+        history.push('/project/create');
+        break;
+      }
+      case MENU_KEY.PROJECT_SETTINGS: {
+        break;
+      }
+      default:
+    }
   }
   render() {
     const {
@@ -63,25 +63,37 @@ export default class App extends Component {
       projects = [],  // 项目列表
     } = this.props;
     return (
-      <div className="self-manager-page" onClick={this.handleAddProject}>
-        <Navbar fixedToTop={true}>
-            <NavbarGroup align={Alignment.LEFT}>
-                <NavbarHeading className="self-manager-page-title">SELF-MANAGER</NavbarHeading>
-                <Button className={Classes.MINIMAL} icon="home" text="管理主页" />
-                <NavbarDivider />
-                <Button className={Classes.MINIMAL} icon="add" text="创建项目" onClick={this.onClickCreateProject}/>
-                <NavbarDivider />
-                <Button className={Classes.MINIMAL} icon="list-detail-view" text="项目详情" onClick={this.onClickDetailProject}/>
-            </NavbarGroup>
-        </Navbar>
-        {
-          isLoading ?
-          <Loading isLoading={isLoading} loadingText="努力加载中"/>
-          : <div className="self-manager-container">
-              <ProjectList projects={projects} />
-              <RootRouter />
-            </div>
-        }
+      <div className={s.selfManagerPage}>
+        <Layout>
+          <Layout.Header className={s.selfManagerPageHeader}>
+            <Menu
+              mode="horizontal"
+              onClick={this.onMenuItemClick.bind(this)}
+              className={s.selfManagerPageMenu}
+            >
+              <Menu.Item disabled><Icon type="home" />SELF-MANAGER</Menu.Item>
+              <Menu.Item key={MENU_KEY.CREATE_PROJECT}><Icon type="plus-circle" />创建项目</Menu.Item>
+              <Menu.Item key={MENU_KEY.PROJECT_SETTINGS}><Icon type="settings" />设置</Menu.Item>
+            </Menu>
+          </Layout.Header>
+          <Layout>
+            {
+              isLoading ? <Loading isLoading={isLoading} loadingText="努力加载中"/>
+              : <div className={s.selfManagerPageContainer}>
+                  <Layout.Sider width={330} theme="light" className={s.selfManagerPageContainerSider}>
+                    <ProjectList projects={projects} />
+                  </Layout.Sider>
+                  <Layout.Content><RootRouter /></Layout.Content>
+                </div>
+            }
+          </Layout>
+          {
+            !!isLoading ? null
+            : <Layout.Footer className={s.selfManagerPageFooter}>
+              <div>@Copyright hongliang.yu(yuhongliang900@163.com)</div>
+            </Layout.Footer>
+          }
+        </Layout>
       </div>
     )
   }

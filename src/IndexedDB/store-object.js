@@ -5,7 +5,7 @@
 export const project = {
   '++id': '项目自增id',
   name: '项目名称',
-  owners: [
+  participators: [
     { 'RD': '开发人员' },
     { 'QA': '测试人员' },
     { 'PM': '产品' }
@@ -18,7 +18,11 @@ export const project = {
       'complete': '是否完成'
     }
   ],
-  startTime: '起始时间',
-  endTime: '截止时间',
+  timestones: {
+    'START': '',
+    'QA': '',
+    'UED': '',
+    'RELEASE': '',
+  },
   processing: '项目进度',
 };
