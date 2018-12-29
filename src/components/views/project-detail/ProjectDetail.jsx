@@ -14,16 +14,14 @@ export default class ProjectDetail extends Component {
     super(props);
   }
   projDetail() {
-    const { props } = this;
-    const { projects, match } = props;
-    const { id: urlParamId } = match.params || {};
+    const { id, projects } = this.props;
     let detail = null;
     // 首页进入的时候，详情页展示第一个项目详情
-    if (typeof urlParamId === 'undefined') {
+    if (!id) {
       detail = projects[0];
     } else {
       for (var i = 0, len = projects.length; i < len; i++) {
-        if (projects[i].id === parseInt(urlParamId, 10)) {
+        if (projects[i].id === id) {
           detail = projects[i];
           break;
         }
@@ -32,13 +30,17 @@ export default class ProjectDetail extends Component {
     return detail;
   }
   render() {
-    const { detail } = this.props;
+    const detail = this.projDetail() || {};
     const {
       name = '',
       participators = [],
       tasks = [],
       timestones = {},
-    } = this.projDetail() || {};
+    } = detail;
+
+    // 如果没有数据null
+    if (!detail) return null;
+
     return (
       <Card title="项目详情">
         <div className={s.selfManagerProjectDetail}>

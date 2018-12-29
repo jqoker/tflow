@@ -1,0 +1,7 @@
+{
+  "name": "SELF-MANAGER APPLICATION",
+  "version": "1.0",
+  "description": "Build an Extension!",
+  "options_page": "index.html",
+  "manifest_version": 2
+}

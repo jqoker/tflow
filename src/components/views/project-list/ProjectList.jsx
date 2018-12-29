@@ -8,19 +8,19 @@ import {
   Card,
   Divider
 } from 'antd';
-import { withRouter } from 'react-router-dom';
 import {
   deleteProject,
   deleteProjectSuccess,
   deleteProjectFail,
+  updatePageStatus,
 } from '../../../actions/index.js';
 import Tasks from './tasks/Tasks.jsx';
 import ProjectDBHelper from '../../../IndexedDB/helper/ProjectDBHelper.js';
 import Alert from '../../Alert.jsx';
 import Toastr from '../../Toastr.js';
+import { PAGE_NAME } from '../../../constants.js';
 import s from './ProjectList.styl';
 
-@withRouter
 @connect()
 export default class ProjectList extends Component {
   constructor(props) {
@@ -49,8 +49,9 @@ export default class ProjectList extends Component {
   }
   onDetail(project) {
     //// TODO: project detail
-    const { history } = this.props;
-    history.push(`/project/detail/${project.id}`);
+    const { id = 0 } = project;
+    const { dispatch } = this.props;
+    dispatch(updatePageStatus({ id, name: PAGE_NAME.DETAIL }));
   }
   onEdit(project) {
     //// TODO: project edit
@@ -58,6 +59,14 @@ export default class ProjectList extends Component {
   render() {
     const { onDetail, onEdit, onDelete } = this;
     const { projects = [] } = this.props;
+
+    // if (!projects.length) {
+    //   return (
+    //     <div className={s.selfManagerProjectsNone}>
+    //       暂无项目
+    //     </div>
+    //   )
+    // }
     /**
      * // TODO: 数据处理放置于reselect中
      * 视图层只负责渲染
