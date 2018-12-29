@@ -5,17 +5,20 @@ import {
   Icon,
   Layout
 } from 'antd';
-import { withRouter, Route, Link } from "react-router-dom";
 import {
   fetchProjectList,
   fetchProjectListSuccess,
   fetchProjectListFail,
+  updatePageStatus,
 } from './actions/index.js';
 import ProjectDBHelper from './IndexedDB/helper/ProjectDBHelper.js';
 import ProjectList from './components/views/project-list/ProjectList.jsx';
-import RootRouter from './router/router.jsx';
+import ProjectDetail from './components/views/project-detail/ProjectDetail.jsx';
+import CreateProject from './components/inputs/create-project/CreateProject.jsx';
+import None from './components/views/none/None.jsx';
 import Loading from './components/views/loading/Loading.jsx';
 import projectSelector from './selectors/project.js';
+import { PAGE_NAME } from './constants.js';
 import s from './app.styl';
 
 const MENU_KEY = {
@@ -23,7 +26,6 @@ const MENU_KEY = {
   PROJECT_SETTINGS: 'PROJECT_SETTINGS',
 };
 
-@withRouter
 @connect(projectSelector)
 export default class App extends Component {
   constructor(props) {
@@ -45,35 +47,50 @@ export default class App extends Component {
     });
   }
   onMenuItemClick(e) {
-    const { history } = this.props;
+    const { dispatch } = this.props;
     switch (e.key) {
-      case MENU_KEY.CREATE_PROJECT: {
-        history.push('/project/create');
-        break;
-      }
-      case MENU_KEY.PROJECT_SETTINGS: {
-        break;
-      }
+      case MENU_KEY.CREATE_PROJECT: { dispatch(updatePageStatus({ name: PAGE_NAME.CREATE })); break;}
+      case MENU_KEY.PROJECT_SETTINGS: { break; }
       default:
     }
+  }
+  onGoToCreateProject() {
+    const { dispatch } = this.props;
+    dispatch(updatePageStatus({ name: PAGE_NAME.CREATE }));
+  }
+  dispatchContent() {
+    const { page = {}, projects } = this.props;
+    const { name, id } = page;
+    return (
+      (name === PAGE_NAME.DETAIL) ?
+      !!projects.length ? <ProjectDetail id={id} /> : <None onGoToCreateProject={this.onGoToCreateProject.bind(this)}/>
+      : <CreateProject />
+    );
   }
   render() {
     const {
       isLoading = false,
       projects = [],  // 项目列表
+      page = {},
     } = this.props;
+    const { name, id } = page;
     return (
       <div className={s.selfManagerPage}>
         <Layout>
           <Layout.Header className={s.selfManagerPageHeader}>
+            <div className={s.selfManagerLogo}>
+              SELF-MANAGER
+              <p className={s.selfManagerLogan}>
+                More easily, More efficient.
+              </p>
+            </div>
             <Menu
               mode="horizontal"
               onClick={this.onMenuItemClick.bind(this)}
               className={s.selfManagerPageMenu}
             >
-              <Menu.Item disabled><Icon type="home" />SELF-MANAGER</Menu.Item>
               <Menu.Item key={MENU_KEY.CREATE_PROJECT}><Icon type="plus-circle" />创建项目</Menu.Item>
-              <Menu.Item key={MENU_KEY.PROJECT_SETTINGS}><Icon type="settings" />设置</Menu.Item>
+              {/*<Menu.Item key={MENU_KEY.PROJECT_SETTINGS}><Icon type="settings" />设置</Menu.Item>*/}
             </Menu>
           </Layout.Header>
           <Layout>
@@ -83,7 +100,7 @@ export default class App extends Component {
                   <Layout.Sider width={330} theme="light" className={s.selfManagerPageContainerSider}>
                     <ProjectList projects={projects} />
                   </Layout.Sider>
-                  <Layout.Content><RootRouter /></Layout.Content>
+                  <Layout.Content>{this.dispatchContent()}</Layout.Content>
                 </div>
             }
           </Layout>

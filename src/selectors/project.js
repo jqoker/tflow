@@ -5,11 +5,13 @@ import { createSelector } from 'reselect';
 import { computeThingsNeedToHandle, computeTimestones } from './helper.js';
 const isLoading = state => state.project.isLoading;
 const list = state => state.project.list;
+const page = state => state.page;
 
 export default createSelector(
   isLoading,
   list,
-  (isLoading, list) => {
+  page,
+  (isLoading, list, page) => {
     const projects = [];
     list = (list || []).filter(item => item && !!item.name);
     list.forEach(project => {
@@ -24,6 +26,7 @@ export default createSelector(
     return {
       isLoading,
       projects,
+      page,
     };
   }
 );

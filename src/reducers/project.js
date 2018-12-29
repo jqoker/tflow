@@ -14,7 +14,6 @@ import {
 const initialState = {
   isLoading: false,
   list: [],
-  detail: {},
 };
 
 export default (state = initialState, { type, payload } = action) => {

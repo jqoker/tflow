@@ -43,6 +43,9 @@ export default class ProjectCreate extends Component {
           success: (project) => {
             dispatch(createProjectSuccess(project));
             Toastr.success('项目创建成功.');
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
           },
           fail: (e) => {
             dispatch(createProjectFail(e));
