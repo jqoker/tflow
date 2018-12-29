@@ -10,6 +10,7 @@ import CreateTasks from '../create-tasks/CreateTasks.jsx';
 import DatePicker from '../tags/DatePicker.jsx';
 import TextInput from '../tags/TextInput.jsx';
 import ProjectDBHelper from '../../../IndexedDB/helper/ProjectDBHelper.js';
+import { projmodel } from '../../../IndexedDB/store-object.js';
 import {
   createProject,
   createProjectSuccess,
@@ -23,56 +24,22 @@ import s from './CreateProject.styl';
  * 初始状态。类同于store-object
  */
 const now = new Date();
-const inititalState = {
-  name: '', // 项目名称
-  participators: [
-    /**
-     * name: 姓名
-     * role: 角色
-     */
-  ],
-  tasks: [
-    /**
-     * title: 名称
-     * tag: 标签
-     * description: 描述
-     * complete: 完成标识
-     */
-  ],
-  /**
-   * 时间节点
-   */
-  timestones: {
-    // 起始时间
-    START: now,
-    // 提测时间
-    QA: now,
-    // UED时间
-    UED: now,
-    // 截止时间
-    END: now,
-    // 发布时间
-    RELEASE: now,
-  }
-};
+const inititalState = Object.assign({}, projmodel);
 
 @connect()
 export default class ProjectCreate extends Component {
   constructor(props) {
     super(props);
-    this.onCreateProject = this.onCreateProject.bind(this);
-  }
-  tagTaskNotComplete() {
-    (this.state.tasks || []).forEach(task => task.complete = 0);
   }
   onCreateProject() {
-    this.tagTaskNotComplete();
+    const { state } = this;
+    const newState = { ...state, complete: 0 }  // 标识项目未完成(新创建的项目不能为已完成);
     Alert.confirm({
       title: '确定创建该项目吗？',
       onOk: () => {
         const { dispatch } = this.props;
         dispatch(createProject());
-        ProjectDBHelper.getInstance().insert(this.state, {
+        ProjectDBHelper.getInstance().insert(newState, {
           success: (project) => {
             dispatch(createProjectSuccess(project));
             Toastr.success('项目创建成功.');
@@ -88,9 +55,7 @@ export default class ProjectCreate extends Component {
   render() {
     return (
       <div className={s.selfManagerProjectCreateContainer}>
-        <Card
-          title="创建项目"
-        >
+        <Card title="创建项目">
           <div className={s.selfManagerProjectCreateInputContent}>
             {/* 创建项目表单 */}
             <Form
@@ -127,7 +92,7 @@ export default class ProjectCreate extends Component {
               type="primary"
               icon="plus-square"
               size="large"
-              onClick={this.onCreateProject}
+              onClick={this.onCreateProject.bind(this)}
             >创建项目</Button>
           </div>
         </Card>

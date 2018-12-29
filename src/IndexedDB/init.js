@@ -1,6 +1,5 @@
 import Dexie from 'dexie';
-import { project } from './store-object.js';
-import config from './config.js';
+import { config, projmodel } from './store-object.js';
 
 /**
  * 初始化数据库
@@ -10,7 +9,7 @@ export const selfManagerAppDB = new Dexie(config.name);
 export const createProjectStore = () => {
   try {
     selfManagerAppDB.version(initVersion).stores({
-      projects: Object.keys(project).join(','),
+      projects: Object.keys(projmodel).join(','),
     });
   } catch(e) { console.log(e); }
 }

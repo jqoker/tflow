@@ -10,13 +10,15 @@ import {
   DELETE_PROJECT_FAIL,
 } from '../actions';
 
+// 初始化state
 const initialState = {
   isLoading: false,
   list: [],
+  detail: {},
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
+export default (state = initialState, { type, payload } = action) => {
+  switch (type) {
     // loading触发
     case FETCH_PROJECT_LIST:
     case CREATE_PROJECT:
@@ -36,18 +38,14 @@ export default (state = initialState, action) => {
     }
     // 查询成功
     case FETCH_PROJECT_LIST_SUCCESS: {
-      const { payload = [] } = action;
       return {
         ...state,
-        list: payload,
+        list: payload || [],
         isLoading: false,
       }
     }
     // 创建成功
     case CREATE_PROJECT_SUCCESS: {
-      const { payload } = action;
-      // 标识任务未完成(新创建的任务不能为已完成)
-      payload.complete = 0;
       return {
         ...state,
         list: [payload, ...state.list],
@@ -56,7 +54,6 @@ export default (state = initialState, action) => {
     }
     // 删除成功
     case DELETE_PROJECT_SUCCESS: {
-      const { payload } = action;
       const { list } = state;
       return {
         ...state,

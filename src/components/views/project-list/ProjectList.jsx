@@ -14,7 +14,7 @@ import {
   deleteProjectSuccess,
   deleteProjectFail,
 } from '../../../actions/index.js';
-import Tasks from '../tasks/Tasks.jsx';
+import Tasks from './tasks/Tasks.jsx';
 import ProjectDBHelper from '../../../IndexedDB/helper/ProjectDBHelper.js';
 import Alert from '../../Alert.jsx';
 import Toastr from '../../Toastr.js';

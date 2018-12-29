@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const pathsToClean = [
   'dist',
   'build'
@@ -15,26 +16,23 @@ const styleLoaderOpts = ({
 }) => {
   const options = {
     fallback: 'style-loader',
-    use: [
-      {
-        loader: 'css-loader',
-        options: {
-          modules,
-          camelCase: true,
-          localIdentName: '[name]__[local]--[hash:base64:5]',
-          importLoaders: 1,
-        },
+    use: [{
+      loader: 'css-loader',
+      options: {
+        modules,
+        camelCase: true,
+        localIdentName: '[name]__[local]--[hash:base64:5]',
+        importLoaders: 1,
       },
-      {
-        loader: 'postcss-loader',
-        options: {
-          ident: 'postcss',
-          plugins: [
-            require('autoprefixer')()
-          ]
-        }
+    },{
+      loader: 'postcss-loader',
+      options: {
+        ident: 'postcss',
+        plugins: [
+          require('autoprefixer')()
+        ]
       }
-    ]
+    }]
   };
   if (stylusLoader) {
     options.use[0].options.importLoaders = 2;
@@ -48,32 +46,28 @@ module.exports = {
   entry: path.join(__dirname, './src/bootstrap.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/bootstrap.[hash].js'
+    filename: 'js/self-manager.[hash].js',
+    // publicPath: '/',
   },
   module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract(styleLoaderOpts({})),
-      },
-      {
-        test: /\.styl$/,
-        use: ExtractTextPlugin.extract(styleLoaderOpts({ modules: true, stylusLoader: true })),
-      },
-      {
-        test: /\.(eot|woff|ttf)$/,
-        loader: 'file-loader',
-        options: {
-          useRelativePath: true,
-          outputPath: 'font/',
-          publicPath: '../resources/icons/'
-        }
+    rules: [{
+      test: /\.jsx?$/,
+      use: 'babel-loader',
+    },{
+      test: /\.css$/,
+      use: ExtractTextPlugin.extract(styleLoaderOpts({})),
+    },{
+      test: /\.styl$/,
+      use: ExtractTextPlugin.extract(styleLoaderOpts({ modules: true, stylusLoader: true })),
+    },{
+      test: /\.(eot|woff|ttf)$/,
+      loader: 'file-loader',
+      options: {
+        useRelativePath: true,
+        outputPath: 'font/',
+        publicPath: '../resources/icons/'
       }
-    ]
+    }]
   },
   plugins: [
     new CleanWebpackPlugin(pathsToClean),
@@ -83,14 +77,19 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
     }),
-    new ExtractTextPlugin('css/self-manager.css')
+    new ExtractTextPlugin('css/self-manager.[hash].css'),
+    // new CopyWebpackPlugin([{
+    //   from: './dist/**/*',
+    //   to: './extensions/',
+    // }])
   ],
   resolve: {
-    extensions: ['.jsx', '.js', '.json'],
+    extensions: ['.jsx', '.js', '.json', '.styl', '.css', '.json'],
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
+    historyApiFallback: false,
   },
 };
