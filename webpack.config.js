@@ -3,10 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const pathsToClean = [
-  'dist',
-  'build'
-];
+
+const BUILD_DIRECTORY = 'self-manager-package';
+const pathsToClean = [BUILD_DIRECTORY];
 const cleanOptions = {};
 const mode = process.env.NODE_ENV;
 
@@ -45,7 +44,7 @@ module.exports = {
   mode: mode,
   entry: path.join(__dirname, './src/bootstrap.jsx'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, BUILD_DIRECTORY),
     filename: 'js/self-manager.[hash].js',
     // publicPath: '/',
   },
@@ -78,16 +77,16 @@ module.exports = {
       inject: 'body',
     }),
     new ExtractTextPlugin('css/self-manager.[hash].css'),
-    // new CopyWebpackPlugin([{
-    //   from: './dist/**/*',
-    //   to: './extensions/',
-    // }])
+    new CopyWebpackPlugin([{
+      from: './extensions/manifest.json',
+      to: '',
+    }])
   ],
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.styl', '.css', '.json'],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, BUILD_DIRECTORY),
     compress: true,
     port: 9000,
     historyApiFallback: false,
