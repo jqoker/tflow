@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import UICardHOC from '../../../hoc/UICardHOC.jsx';
 import s from './Tasks.styl';
 
-export default UICardHOC({ title: '项目任务看板' })(({ tasks, ...rest }) => (
+export default UICardHOC({ title: '项目任务看板', isEdit: true })(({ tasks, ...rest }) => (
   <ul className={s.tasksList}>
     {
       (tasks || []).map((task, j) => {

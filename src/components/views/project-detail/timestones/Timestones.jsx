@@ -22,7 +22,7 @@ const dotStatusTip = (dot, { status, index }) => (
   </Popover>
 );
 
-export default UICardHOC({ title: '关键时间节点'})(({ timestones, ...rest }) => (
+export default UICardHOC({ title: '关键时间节点', isEdit: true })(({ timestones, ...rest }) => (
   <Steps current={timestones.stage} progressDot={dotStatusTip}>
     {
       (timestones.list || []).map((time, i) =>

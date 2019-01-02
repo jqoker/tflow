@@ -9,8 +9,6 @@ const defaultOptions = {
   icon: 'question-circle',
   onOk: () => {},
   onCancel: () => {},
-  okText: '确定',
-  cancelText: '取消',
 };
 
 const Alert = {};
