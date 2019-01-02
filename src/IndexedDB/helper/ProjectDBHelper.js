@@ -15,15 +15,11 @@ export default class ProjectDBHelper extends BaseDBHelper {
   }
   // 查询
   select(options = {}) {
-    const {
-      store,
-      dbProxy,
-      selfManagerAppDB,
-    } = this;
+    const { dbAgent, applicationDB } = this;
     const { success, fail } = { ...defaultOptions, ...options };
-    dbProxy.spawn(function*() {
+    dbAgent.spawn(function*() {
       try {
-        const projects = yield selfManagerAppDB.projects.reverse().toArray();
+        const projects = yield applicationDB.project.reverse().toArray();
         success(projects);
       } catch(e) {
         fail(e);
@@ -32,15 +28,11 @@ export default class ProjectDBHelper extends BaseDBHelper {
   }
   // 插入
   insert(project, options = {}) {
-    const {
-      store,
-      dbProxy,
-      selfManagerAppDB,
-    } = this;
+    const { dbAgent, applicationDB } = this;
     const { success, fail } = { ...defaultOptions, ...options };
-    dbProxy.spawn(function*() {
+    dbAgent.spawn(function*() {
       try {
-        yield selfManagerAppDB.projects.add(project);
+        yield applicationDB.project.add(project);
         success(project);
       } catch(e) {
         fail(e);
@@ -49,16 +41,12 @@ export default class ProjectDBHelper extends BaseDBHelper {
   }
   // 删除
   delete(project, options = {}) {
-    const {
-      store,
-      dbProxy,
-      selfManagerAppDB,
-    } = this;
+    const { dbAgent, applicationDB } = this;
     const { id } = project || {};
     const { success, fail } = { ...defaultOptions, ...options };
-    dbProxy.spawn(function*() {
+    dbAgent.spawn(function*() {
       try {
-        yield selfManagerAppDB.projects.delete(id);
+        yield applicationDB.project.delete(id);
         success(project);
       } catch(e) {
         fail(e);

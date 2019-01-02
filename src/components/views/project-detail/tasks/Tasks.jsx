@@ -4,9 +4,10 @@
 
 import React from 'react';
 import classnames from 'classnames';
+import UICardHOC from '../../../hoc/UICardHOC.jsx';
 import s from './Tasks.styl';
 
-export default ({ tasks, ...rest }) => (
+export default UICardHOC({ title: '项目任务看板' })(({ tasks, ...rest }) => (
   <ul className={s.tasksList}>
     {
       (tasks || []).map((task, j) => {
@@ -19,4 +20,4 @@ export default ({ tasks, ...rest }) => (
       })
     }
   </ul>
-)
+));

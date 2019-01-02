@@ -4,6 +4,7 @@
 import React from 'react';
 import { Steps, Popover } from 'antd';
 import classnames from 'classnames';
+import UICardHOC from '../../../hoc/UICardHOC.jsx';
 import { projmodel } from '../../../../IndexedDB/store-object.js';
 import s from './Timestones.styl';
 
@@ -21,7 +22,7 @@ const dotStatusTip = (dot, { status, index }) => (
   </Popover>
 );
 
-export default ({ timestones, ...rest }) => (
+export default UICardHOC({ title: '关键时间节点'})(({ timestones, ...rest }) => (
   <Steps current={timestones.stage} progressDot={dotStatusTip}>
     {
       (timestones.list || []).map((time, i) =>
@@ -33,4 +34,4 @@ export default ({ timestones, ...rest }) => (
       )
     }
   </Steps>
-)
+));

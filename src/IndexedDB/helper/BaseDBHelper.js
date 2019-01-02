@@ -2,14 +2,12 @@
  * 数据库操作基类
  */
 import Dexie from 'dexie';
-import store from '../../store';
-import { selfManagerAppDB } from '../init.js';
+import { applicationDB } from '../init.js';
 
 export default class BaseDBHelper {
   constructor() {
-    this.store = store;
-    this.selfManagerAppDB = selfManagerAppDB;
-    this.dbProxy = Dexie;
+    this.applicationDB = applicationDB;
+    this.dbAgent = Dexie;
   }
 
   /**

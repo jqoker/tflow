@@ -3,9 +3,10 @@
  */
 
 import React from 'react';
+import UICardHOC from '../../../hoc/UICardHOC.jsx';
 import s from './Participator.styl';
 
-export default ({ participators, ...rest }) => (
+export default UICardHOC({ title: '项目相关人员'})(({ participators, ...rest }) => (
   <ul className={s.participatorList}>
     {
       (participators || []).map((participator, j) =>
@@ -16,4 +17,4 @@ export default ({ participators, ...rest }) => (
       )
     }
   </ul>
-)
+));
