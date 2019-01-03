@@ -8,6 +8,9 @@ import {
   DELETE_PROJECT,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_FAIL,
+  EDIT_PROJECT,
+  EDIT_PROJECT_SUCCESS,
+  EDIT_PROJECT_FAIL,
 } from '../actions';
 
 // 初始化state
@@ -21,7 +24,8 @@ export default (state = initialState, { type, payload } = action) => {
     // loading触发
     case FETCH_PROJECT_LIST:
     case CREATE_PROJECT:
-    {
+    case EDIT_PROJECT:
+    case DELETE_PROJECT: {
       return {
         ...state,
         isLoading: true,
@@ -29,7 +33,9 @@ export default (state = initialState, { type, payload } = action) => {
     }
     // 失败
     case FETCH_PROJECT_LIST_FAIL:
-    case CREATE_PROJECT_FAIL: {
+    case CREATE_PROJECT_FAIL:
+    case EDIT_PROJECT_FAIL:
+    case DELETE_PROJECT_FAIL: {
       return {
         ...state,
         isLoading: false,
@@ -60,8 +66,16 @@ export default (state = initialState, { type, payload } = action) => {
         isLoading: false,
       };
     }
-    case DELETE_PROJECT_FAIL: {
-      return state;
+    case EDIT_PROJECT_SUCCESS: {
+      console
+      const { id, } = payload;
+      const { list: projects } = state;
+      const nextProjects = projects.map(project => (project.id === id ? payload : project));
+      return {
+        ...state,
+        list: nextProjects,
+        isLoading: false,
+      };
     }
     default:
       return state;

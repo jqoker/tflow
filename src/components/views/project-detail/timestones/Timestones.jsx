@@ -10,7 +10,7 @@ import s from './Timestones.styl';
 
 // 浮层提示
 const titles = Object.keys(projmodel.timestones).map(key => projmodel.timestones[key]);
-const dotStatus = { 'finish': '已完成', 'process': '进行中', 'wait': '未完成', };
+const dotStatus = { 'finish': '过去时间节点', 'process': '当前时间节点', 'wait': '未来时间节点', };
 const dotStatusTip = (dot, { status, index }) => (
   <Popover content={
     <p className={s.dotStatus}>
@@ -22,8 +22,8 @@ const dotStatusTip = (dot, { status, index }) => (
   </Popover>
 );
 
-export default UICardHOC({ title: '关键时间节点', isEdit: true })(({ timestones, ...rest }) => (
-  <Steps current={timestones.stage} progressDot={dotStatusTip}>
+export default UICardHOC({ title: '关键时间节点' })(({ timestones, ...rest }) => (
+  <Steps current={timestones.stage} progressDot={dotStatusTip} className={s.timestonesSteps}>
     {
       (timestones.list || []).map((time, i) =>
         <Steps.Step

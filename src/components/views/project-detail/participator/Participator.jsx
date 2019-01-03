@@ -8,7 +8,6 @@ import s from './Participator.styl';
 
 @UICardHOC({
   title: '项目相关成员',
-  isEdit: true,
 })
 export default class Participator extends React.Component {
   render() {

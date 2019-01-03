@@ -53,6 +53,20 @@ export default class ProjectDBHelper extends BaseDBHelper {
       }
     });
   }
+  // 更新
+  update(project, changes, options = {}) {
+    const { dbAgent, applicationDB } = this;
+    const { id } = project || {};
+    const { success, fail } = { ...defaultOptions, ...options };
+    dbAgent.spawn(function*() {
+      try {
+        yield applicationDB.project.update(id, changes);
+        success(project);
+      } catch(e) {
+        fail(e);
+      }
+    });
+  }
 }
 
 ProjectDBHelper.getInstance = (() => {

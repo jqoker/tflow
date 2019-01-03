@@ -53,6 +53,7 @@ export const computeTimestones = (project) => {
       timestone = {
         title: timeStr,
         description: projmodel.timestones[key],
+        tag: key,
       };
       if (now > +time) stage++;
     }
