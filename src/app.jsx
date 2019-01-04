@@ -20,6 +20,7 @@ import Loading from './components/views/loading/Loading.jsx';
 import projectSelector from './selectors/project.js';
 import { PAGE_NAME } from './constants.js';
 import s from './app.styl';
+import ProjectDetailList from './components/views/project-detail/ProjectDetailList.jsx';
 
 const MENU_KEY = {
   CREATE_PROJECT: 'CREATE_PROJECT',
@@ -77,35 +78,42 @@ export default class App extends Component {
     return (
       <div className={s.selfManagerPage}>
         <Layout>
-          <Layout.Header className={s.selfManagerPageHeader}>
-            <div className={s.selfManagerLogo}>
-              SELF-MANAGER
-              <p className={s.selfManagerLogan}>
-                More easily, More efficient.
-              </p>
-            </div>
-            <Menu
-              mode="horizontal"
-              onClick={this.onMenuItemClick.bind(this)}
-              className={s.selfManagerPageMenu}
-            >
-              <Menu.Item key={MENU_KEY.CREATE_PROJECT}><Icon type="plus-circle" />创建项目</Menu.Item>
-              {/*<Menu.Item key={MENU_KEY.PROJECT_SETTINGS}><Icon type="settings" />设置</Menu.Item>*/}
-            </Menu>
-          </Layout.Header>
+          <Layout.Sider width={330} theme="light" className={s.selfManagerPageContainerSider}>
+            <ProjectList projects={projects} />
+          </Layout.Sider>
           <Layout>
-            {
-              isLoading ? <Loading isLoading={isLoading} loadingText="努力加载中"/>
-              : <div className={s.selfManagerPageContainer}>
-                  <Layout.Sider width={330} theme="light" className={s.selfManagerPageContainerSider}>
-                    <ProjectList projects={projects} />
-                  </Layout.Sider>
-                  <Layout.Content>{this.dispatchContent()}</Layout.Content>
+            {/*
+              <Layout.Header className={s.selfManagerPageHeader}>
+                <div className={s.selfManagerLogo}>
+                  项目管家
+                  <p className={s.selfManagerLogan}>
+                    更简单、更高效
+                  </p>
                 </div>
-            }
+                <Menu
+                  mode="horizontal"
+                  onClick={this.onMenuItemClick.bind(this)}
+                  className={s.selfManagerPageMenu}
+                >
+                  <Menu.Item key={MENU_KEY.CREATE_PROJECT}><Icon type="plus-circle" />创建项目</Menu.Item>
+                  <Menu.Item key={MENU_KEY.PROJECT_SETTINGS}><Icon type="settings" />设置</Menu.Item>
+                </Menu>
+              </Layout.Header>
+            */}
+              {
+                isLoading ? <Loading isLoading={isLoading} loadingText="努力加载中"/>
+                : <div className={s.selfManagerPageContainer}>
+                    {/*
+                      <Layout.Sider width={330} theme="light" className={s.selfManagerPageContainerSider}>
+                        <ProjectList projects={projects} />
+                      </Layout.Sider>
+                    */}
+                    <Layout.Content><ProjectDetailList projects={projects}/>{/*this.dispatchContent()*/}</Layout.Content>
+                  </div>
+              }
           </Layout>
           {
-            !!isLoading ? null
+            !isLoading ? null
             : <Layout.Footer className={s.selfManagerPageFooter}>
               <div>@Copyright hongliang.yu(yuhongliang900@163.com)</div>
             </Layout.Footer>

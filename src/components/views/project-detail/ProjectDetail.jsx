@@ -127,7 +127,7 @@ export default class ProjectDetail extends Component {
       >点击更新</Button>
     );
     return (
-      <Card title="项目详情" extra={cardExtra}>
+      <Card title="项目列表" extra={cardExtra}>
         <Title name={name} />
         <Timestones timestones={timestones} />
         <Tasks tasks={tasks} />

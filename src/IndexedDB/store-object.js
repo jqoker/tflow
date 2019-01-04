@@ -38,5 +38,7 @@ export const projmodel = {
     'QA': '提测时间',
     'UED': 'UED验收时间',
     'RELEASE': '项目上线时间',
-  }
+  },
+  description: '项目描述',
+  progress: '项目进度'
 }
