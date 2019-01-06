@@ -3,7 +3,6 @@
  */
 
 import { createAction } from 'redux-actions';
-export { UPDATE_PAGE_STATUS, updatePageStatus } from './page.js';
 /**
  * 项目列表
  */

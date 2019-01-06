@@ -19,6 +19,7 @@ import {
 } from '../../../actions';
 import Toastr from '../../Toastr.js';
 import Alert from '../../Alert.jsx';
+import s from './CreateProject.styl';
 
 /**
  * 初始状态。类同于store-object
@@ -57,7 +58,7 @@ export default class ProjectCreate extends Component {
   }
   render() {
     return (
-      <Card title="创建项目">
+      <div className={s.selfManagerCreateProjectContainer}>
         {/* 创建项目表单 */}
         <Form state={this.state} onChange={state => this.setState(state)}>
           <Title />
@@ -71,7 +72,7 @@ export default class ProjectCreate extends Component {
           icon="plus-square"
           size="large"
           onClick={this.onCreateProject.bind(this)}>创建项目</Button>
-      </Card>
+      </div>
     );
   }
 }

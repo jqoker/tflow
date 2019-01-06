@@ -2,31 +2,29 @@
  * 项目数据处理中心
  */
 import { createSelector } from 'reselect';
-import { computeThingsNeedToHandle, computeTimestones } from './helper.js';
+import { computeProgress, computeTimestones } from './helper.js';
 const isLoading = state => state.project.isLoading;
 const list = state => state.project.list;
-const page = state => state.page;
 
 export default createSelector(
   isLoading,
   list,
-  page,
-  (isLoading, list, page) => {
+  (isLoading, list) => {
     const projects = [];
     list = (list || []).filter(item => item && !!item.name);
     list.forEach(project => {
-      const thingsNeedHandle = computeThingsNeedToHandle(project);
+      const { percent, thingsNeedToHandle } = computeProgress(project);
       const timestones = computeTimestones(project);
       projects.push({
         ...project,
-        thingsNeedHandle,
+        percent,
+        thingsNeedToHandle,
         timestones,
       });
     });
     return {
       isLoading,
       projects,
-      page,
     };
   }
 );

@@ -3,8 +3,8 @@
  */
 import { projmodel } from '../IndexedDB/store-object.js';
 
-// 计算待办事项
-export const computeThingsNeedToHandle = (project) => {
+// 计算进度
+export const computeProgress = (project) => {
   const { tasks } = project || {};
   const count = (tasks || []).length;
   let k = 0; // 已完成
@@ -12,12 +12,16 @@ export const computeThingsNeedToHandle = (project) => {
     task.complete = 0;  // 创建任务的时候，标记为未完成
     k += parseInt(task.complete || 0, 10);
   });
+  const percent = `${(100 * k / count)}%`;
   // 待办事项
-  return [
-    { title: '待处理事项', count: count - k, taskCSSStyle: { color: '#F00'} },
-    { title: '未完成事项', count: count - k,  taskCSSStyle: { color: '#F3F'} },
-    { title: '已完成事项', count: k, taskCSSStyle: { color: '#00F'} }
-  ];
+  return {
+    percent,
+    thingsNeedToHandle: [
+      { title: '待处理事项', count: count - k, taskCSSStyle: { color: '#F00'} },
+      { title: '未完成事项', count: count - k,  taskCSSStyle: { color: '#F3F'} },
+      { title: '已完成事项', count: k, taskCSSStyle: { color: '#00F'} }
+    ]
+  };
 };
 
 // 计算时间节点
