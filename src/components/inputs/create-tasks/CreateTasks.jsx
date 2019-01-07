@@ -7,7 +7,7 @@ import UICardHOC from '../../hoc/UICardHOC.jsx';
 import Tasks from '../fields/Tasks.jsx';
 import TextInput from '../tags/TextInput.jsx';
 
-export default UICardHOC({ title: '项目子任务', })((props) => (
+export default UICardHOC({ title: '事务子任务', })((props) => (
   <Field fieldName="tasks" type={Tasks}>
     <Field fieldName="title" type={TextInput} label="任务名称" placeholder="请输入任务名称"/>
     {/* <Field fieldName="tag" type={Checkbox} title="任务标签"/> */}

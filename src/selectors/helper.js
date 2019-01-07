@@ -12,7 +12,7 @@ export const computeProgress = (project) => {
     task.complete = 0;  // 创建任务的时候，标记为未完成
     k += parseInt(task.complete || 0, 10);
   });
-  const percent = `${(100 * k / count)}%`;
+  const percent = (count === 0 ? '100%' : `${(100 * k / count)}%`);
   // 待办事项
   return {
     percent,

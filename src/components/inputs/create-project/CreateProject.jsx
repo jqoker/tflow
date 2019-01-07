@@ -36,21 +36,21 @@ export default class ProjectCreate extends Component {
     const { state } = this;
     const newState = { ...state, complete: 0 }  // 标识项目未完成(新创建的项目不能为已完成);
     Alert.confirm({
-      title: '确定创建该项目吗？',
+      title: '确定创建该事务吗？',
       onOk: () => {
         const { dispatch } = this.props;
         dispatch(createProject());
         ProjectDBHelper.getInstance().insert(newState, {
           success: (project) => {
             dispatch(createProjectSuccess(project));
-            Toastr.success('项目创建成功.');
+            Toastr.success('事务创建成功.');
             setTimeout(() => {
               window.location.reload();
             }, 300);
           },
           fail: (e) => {
             dispatch(createProjectFail(e));
-            Toastr.error('项目创建失败, 请重试.');
+            Toastr.error('事务创建失败, 请重试.');
           }
         });
       }
@@ -71,7 +71,7 @@ export default class ProjectCreate extends Component {
           type="primary"
           icon="plus-square"
           size="large"
-          onClick={this.onCreateProject.bind(this)}>创建项目</Button>
+          onClick={this.onCreateProject.bind(this)}>创建事务</Button>
       </div>
     );
   }

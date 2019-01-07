@@ -7,7 +7,7 @@ import UICardHOC from '../../../hoc/UICardHOC.jsx';
 import s from './Participator.styl';
 
 @UICardHOC({
-  title: '项目相关成员',
+  title: '事务相关成员',
 })
 export default class Participator extends React.Component {
   render() {

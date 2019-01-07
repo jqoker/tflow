@@ -6,9 +6,9 @@ import { Field } from 'simple-react-form';
 import UICardHOC from '../../hoc/UICardHOC.jsx';
 import TextInput from '../tags/TextInput.jsx';
 
-export default UICardHOC({ title: '项目名称' })((props) => (
+export default UICardHOC({ title: '事务名称、描述' })((props) => (
   <div className={{}}>
-    <Field fieldName="name" type={TextInput} label="项目名称"/>
-    <Field fieldName="description" type={TextInput} label="项目描述"/>
+    <Field fieldName="name" type={TextInput} label="事务名称"/>
+    <Field fieldName="description" type={TextInput} label="事务描述"/>
   </div>
 ));
