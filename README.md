@@ -1,3 +1,3 @@
-## SELF-MANAGER
+## tflow
 
-### A simple self manager application. include(project,tasks,participators)manager. or team cooperation.
+一个项目管理工具，用于日常项目进度、流程管理。
